@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mega Shopping App</title>
+        <link rel="shortcut icon" href="./images/megashoppinMartLogo.png" type="image/x-icon">
+        <!-- Bootstrap CSS link -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <!-- Navbar begins here -->
+        <header>
+
+            <div class=" container justify-content-center mb-3 py-3"
+                style="background-color:#FCD8D9; height:430px ; background-image:url(./images/trolley-fun.jpg);background-repeat: no-repeat; max-width: 100%;">
+                <div class="mt-4">
+                    <h1 class="text-center fw-bold " style="color:#003049">--Mega Shopping Mart--</h1>
+                    <div class="mb-2 py-4 d-flex gap-1 justify-content-center">
+                        <input type="text" id="productName" class="w-50 text-center "
+                            placeholder="Type Product Name Here" style="height: 50px;">
+                        <button class="btn btn-outline-light fw-bold" style="background-color: #00afb9;"
+                            onclick="searchProduct()">Search</button>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-center ">
+                        <button class="btn-outline-light rounded fw-bold" id="sortItemName" onclick="sortItemByName()"
+                            style="background-color:#00afb9; height:50px">Sort Item By Name</button>
+                        <div class="dropdown">
+                            <button class="btn-outline-light rounded fw-bold  dropdown-toggle" type="button"
+                                id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+                                style="background-color:#00afb9; height:50px">
+                                Sort By Price
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" value="asc">Asscending</a></li>
+                                <li><a class="dropdown-item" value="desc">Descending</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <h2>Shop above <span
+                                style="color: #003049; font-weight: bold; font-family:'Times New Roman', Times, serif; font-weight: bold;">$75</span>
+                        </h2>
+                        <h3>get<span style="font-family:'Times New Roman', Times, serif;font-size: 40px;color: #e63946;"
+                                ;> 20% </span>off using</h3>
+                        <h3 style=" color:#03045e; font-family: fantasy; font-weight: bolder;">PROMO20
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Navbar ends here -->
+        <main class="container d-flex gap-4 flex-column flex-lg-row">
+            <div>
+                <div>
+                    <h1 class="my-4 text-center fw-bold fs-1">--Our Products--</h1>
+                    <div>
+                        <div class="container mb-5">
+                            <div class="row row-cols-lg-3 row-cols-1" id="card-container">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Button trigger modal -->
+                <!-- Modal starts here -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body" style="background-color: rgb(248, 246, 242);">
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="d-flex flex-column justify-content-center align-content-center text-center"
+                                    id="modal-container">
+
+                                </div>
+                                <button onclick="handleAddToCart(this)" type="button"
+                                    class="btn btn-primary fw-bolder text-white w-100"
+                                    style="background-color:#00afb9; border: none;height: 50px;">Add To Cart</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Ends here -->
+                <!-- Show All button begins here -->
+                <div class="d-flex justify-content-center">
+                    <button class="btn d-none text-white fw-bolder mb-4" onclick="showAll()"
+                        style="background-color:#00afb9; border: none;width: 150px;height: 50px;" id="showAllBtn">
+                        Show
+                        All</button>
+                </div>
+                <!-- Show All button ends here -->
+
+            </div>
+            <div class="mt-4">
+                <!-- Coupon section starts here -->
+                <div style="margin-top: 100px;">
+                    <h2>Use your coupon</h2>
+                    <input id="couponCode" type="text" placeholder="Enter your coupon"
+                        class="text-center rounded-2 mb-2 mt-2" style="width:15rem;height: 3rem;">
+                    <button class="text-white fw-bold border-0"
+                        style="margin-left: 1rem; background-color: #00afb9;width: 200px" id="coupon-btn" disabled>Apply
+                        Coupon</button>
+                </div>
+                <!-- Coupon section ends here -->
+                <!-- cart begins here -->
+                <div>
+                    <hr>
+                    <div>
+                        <ol id="cart-container"></ol>
+                    </div>
+                    <hr>
+                </div>
+                <!-- Cart ends here -->
+                <!-- cart calculations section begins here -->
+                <div class="m-4">
+                    <h2>SubTotal:$ <span id="subTotal"></span></h2>
+                    <h2>Discount:$ <span id="discount"></span></h2>
+                    <hr>
+                    <h2>GrandTotal:$ <span id="total"></span></h2>
+                </div>
+                <!-- cart calculations section ends here -->
+                <!-- Button trigger modal -->
+                <button class="fw-bold text-white border-0 py-1 rounded-2 "
+                    style="background-color:  #00afb9; width: 250px;margin-left: 25px;" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal1" id="purchasebtn">Make Purchase</button>
+                <!-- Modal begins here-->
+                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content d-flex align-items-center justify-content-center">
+                            <div class="modal-header">
+                                <img src="./images/megashoppinMartLogo.png" alt="megashoppinMartLogo"
+                                    style="height: 100px;">
+
+                            </div>
+                            <div class="modal-body">
+                                <h1 class="modal-title f-2 fw-bold" id="exampleModalLabel1">Congratulations</h1>
+                                <p class="text-center h5">Your Purchase is complete</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary fw-medium" id="refreshPage"
+                                    data-bs-dismiss="modal"
+                                    style="background-color: #00afb9 ;width: 100px;">HOME</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </main>
+        <!-- Useful Bootstrap files and script files tags -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+        <script src="script.js"></script>
+    </body>
+
+</html>
